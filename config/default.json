@@ -1,0 +1,16 @@
+{
+    "database": {
+        "host": "127.0.0.1",
+        "port": "3307",
+        "username": "root",
+        "password": "23061999",
+        "name": "resource_manage"
+    },
+    "openstack": {
+        "user_name": "quanht",
+        "password": "23061999",
+        "identity_endpoint": "http://localhost:5000/v3"
+    },
+    "schedule_time": 300000,
+    "secret": "this_is_secret_key"
+}
