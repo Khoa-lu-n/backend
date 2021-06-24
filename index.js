@@ -1,13 +1,14 @@
 const express = require("express");
 const body_parser = require("body-parser");
 const morgan = require("morgan");
+const cors = require("cors");
+const node_cron = require("node-cron");
 const port = process.env.PORT || 3001;
 const route = require("./app/routers/index");
 const db = require("./app/model/index");
 const loginToOpenStack = require("./app/utils/background-jobs/login-openstack");
 const initData = require("./app/utils/background-jobs/init-data");
-const cors = require("cors");
-const node_cron = require("node-cron");
+const checkResource = require("./app/utils/background-jobs/check-resource")
 
 const app = express();
 app.use(body_parser.json());
@@ -29,16 +30,19 @@ db.sequelize
     // force: true
   })
   .then(async () => {
-    // await loginToOpenStack();
+    await loginToOpenStack();
     // initData();
-    // // running a task every 50 minutes
-    // node_cron.schedule("*/50 * * * *", async () => {
-    //   await loginToOpenStack()
-    // })
-    // //running a task every 1 minutes
-    // node_cron.schedule("*/5 * * * *", async () => {
-    //   await initData()
-    // })
+    // running a task every 50 minutes
+    node_cron.schedule("*/50 * * * *", async () => {
+      await loginToOpenStack()
+    })
+    //running a task every 1 minutes
+    node_cron.schedule("*/10 * * * *", async () => {
+      await initData()
+    })
+    node_cron.schedule("*/10 * * * *", async () => {
+      await checkResource()
+    })
     app.listen(port, e => {
       if (e) {
         console.error(e.message);

@@ -38,7 +38,7 @@ async function updateNotificationSetting(req, res){
       min_cpu, min_disk, min_memory, email
     }, {
       where: {
-        name: "quanht"
+        name: req.tokenData.user_name
       }
     })
     return res.json(response_format.success({}));
@@ -53,7 +53,7 @@ async function getNotificationSetting(req, res){
   try{
     let account = await db.Account.findOne({
       where: {
-        name: "quanht"
+        name: req.tokenData.user_name
       }
     })
     if(!account){

@@ -17,6 +17,7 @@ module.exports = async () => {
                 token: account.dataValues.token
             })
             let projects = rs_projects.projects;
+            console.log("Project length:", projects.length)
             for(let i=0; i<projects.length; i++){
                 let rs_quota_set = await openstackApi.getProjectDefail({
                     // uri: "http://localhost:8774/v2.1", 

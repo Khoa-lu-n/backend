@@ -4,6 +4,7 @@ const Sequelize = require('sequelize')
 const basename = path.basename(module.filename)
 const config = require('config')
 const db_config = config.get('database')
+console.log(db_config)
 const db = {}
 
 let sequelize = new Sequelize(
@@ -17,6 +18,7 @@ let sequelize = new Sequelize(
     logging: false
   }
 )
+
 fs
   .readdirSync(__dirname)
   .filter((file) => {

@@ -2,7 +2,7 @@ const rp = require("request-promise");
 
 
 module.exports.getProjectCanAccess = async ({uri, id_user, token}) => {
-    uri = "http://localhost:5000/v3"
+    uri = "http://192.168.1.202:5000/v3"
     return await rp({
         uri: `${uri}/users/${id_user}/projects`,
         method: "GET",
@@ -14,7 +14,7 @@ module.exports.getProjectCanAccess = async ({uri, id_user, token}) => {
 }
 
 module.exports.getProjectDefail = async ({project_id, uri, token}) => {
-    uri = "http://localhost:8774/v2.1"
+    uri = "http://192.168.1.202:8774/v2.1"
     return await rp({
         uri: `${uri}/os-quota-sets/${project_id}/detail`,
         method: "GET",
@@ -38,7 +38,7 @@ const getFlavorsDetail = async ({uri, token}) => {
 }
 
 module.exports.getInstancesDetailOfProject = async ({project_id, uri, token}) => {
-    uri = "http://localhost:8774/v2.1"
+    uri = "http://192.168.1.202:8774/v2.1"
     let rs = await rp({
         uri: `${uri}/servers/detail?all_tenants=true&project_id=${project_id}`,
         method: "GET",
@@ -53,12 +53,11 @@ module.exports.getInstancesDetailOfProject = async ({project_id, uri, token}) =>
         e.flavor = flavor;
         return e
     })
-    
     return {servers};
 }
 
 module.exports.getStorageQuotasForProject = async ({admin_project_id, uri, token, project_id}) => {
-    uri = "http://localhost:8776/v3"
+    uri = "http://192.168.1.202:8776/v3"
     let rs = await rp({
         uri: `${uri}/${admin_project_id}/os-quota-sets/${project_id}?usage=true`,
         method: "GET",
